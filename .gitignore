@@ -1,12 +1,10 @@
 # Project documentation
 project-plan.md
 
-# Node.js dependencies
+# Dependencies
 node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-package-lock.json
+/.pnp
+.pnp.js
 
 # Environment variables
 .env
@@ -15,33 +13,39 @@ package-lock.json
 .env.test.local
 .env.production.local
 
-# Database files
+# Build outputs
+/build
+/dist
+/client/build
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Database
 *.sqlite
 *.sqlite3
 *.db
 
-# Build directories
-/build
-/dist
-/client/build
-/client/dist
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
 
-# Log files
-logs/
-*.log
-
-# OS generated files
+# OS
 .DS_Store
 Thumbs.db
 ehthumbs.db
 Desktop.ini
 
-# IDE and editor directories
-/.idea
-/.vscode
-*.swp
-*.swo
+# Testing
+/coverage
 
 # Temporary files
 *.tmp
+*.temp
 .cache/ 

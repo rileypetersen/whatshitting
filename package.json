@@ -1,1 +1,22 @@
-{"name":"whatshitting","version":"1.0.0","description":"Game explorer application","scripts":{"start":"concurrently \"cd server && npm run start\" \"cd client && npm run start\"","dev":"concurrently \"cd server && npm run dev\" \"cd client && npm run start\"","build":"cd client && npm run build","test":"concurrently \"cd server && npm test\" \"cd client && npm test\"","test:server":"cd server && npm test","test:client":"cd client && npm test","install:all":"npm install && cd server && npm install && cd ../client && npm install","clean":"rm -rf node_modules && cd server && rm -rf node_modules && cd ../client && rm -rf node_modules"},"devDependencies":{"concurrently":"^8.2.0"}}
+{
+  "name": "whatshitting",
+  "version": "1.0.0",
+  "description": "Game explorer application",
+  "scripts": {
+    "start": "concurrently \"npm run start:server\" \"npm run start:client\"",
+    "dev": "concurrently \"npm run dev:server\" \"npm run start:client\"",
+    "build": "npm run build:client",
+    "test": "concurrently \"npm run test:server\" \"npm run test:client\"",
+    "test:server": "cd server && npm test",
+    "test:client": "cd client && npm test",
+    "install:all": "npm install && cd server && npm install && cd ../client && npm install",
+    "clean": "rm -rf node_modules && cd server && rm -rf node_modules && cd ../client && rm -rf node_modules",
+    "start:server": "cd server && npm run start",
+    "start:client": "cd client && npm run start",
+    "dev:server": "cd server && npm run dev",
+    "build:client": "cd client && npm run build"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
