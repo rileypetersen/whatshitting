@@ -195,7 +195,7 @@ const dbApi = {
   getGames: (page = 1, limit = 60, providers = 'All', sortBy = 'random', searchTerm = '', collectionId = null, callback) => {
     const offset = (page - 1) * limit;
     
-    console.log('DB getGames called with search term:', searchTerm);
+    console.log('DB getGames called with search term:', searchTerm, 'Type:', typeof searchTerm);
     console.log('DB getGames called with collection ID:', collectionId);
     
     // Base query - modified to handle collection filtering
@@ -231,9 +231,37 @@ const dbApi = {
     
     // Add search term if provided
     if (searchTerm && searchTerm.trim() !== '') {
-      console.log('Adding search condition for:', searchTerm);
-      whereConditions.push('title LIKE ?');
-      params.push(`%${searchTerm}%`);
+      const cleanedSearchTerm = searchTerm.trim();
+      console.log('Adding fuzzy search condition for:', cleanedSearchTerm);
+      
+      // Split the search term into words for better fuzzy matching
+      const searchWords = cleanedSearchTerm.toLowerCase().split(/\s+/);
+      
+      // Create a more flexible fuzzy search condition
+      const fuzzyConditions = [];
+      
+      // For each word, create a separate LIKE condition
+      searchWords.forEach(word => {
+        // Add the word with wildcards before, between, and after characters
+        fuzzyConditions.push('LOWER(title) LIKE ?');
+        params.push(`%${word}%`);
+        
+        // Add common misspellings/typo patterns by replacing or removing characters
+        if (word.length > 3) {
+          // Allow for one character to be different (fuzzy match)
+          for (let i = 0; i < word.length; i++) {
+            const fuzzyWord = word.substring(0, i) + '_' + word.substring(i + 1);
+            fuzzyConditions.push('LOWER(title) LIKE ?');
+            params.push(`%${fuzzyWord}%`);
+          }
+        }
+      });
+      
+      // Combine the fuzzy conditions with OR
+      whereConditions.push(`(${fuzzyConditions.join(' OR ')})`);
+      
+      console.log('After adding fuzzy search, where conditions:', whereConditions);
+      console.log('After adding fuzzy search, params:', params);
     }
     
     // Combine query parts

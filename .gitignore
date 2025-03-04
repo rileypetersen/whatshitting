@@ -1,0 +1,47 @@
+# Project documentation
+project-plan.md
+
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Database files
+*.sqlite
+*.sqlite3
+*.db
+
+# Build directories
+/build
+/dist
+/client/build
+/client/dist
+
+# Log files
+logs/
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDE and editor directories
+/.idea
+/.vscode
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+.cache/ 

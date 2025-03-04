@@ -67,6 +67,30 @@ def extract_game_info(html_file, csv_file, limit=0):
                 if img_match:
                     img_url = img_match.group(1)
                     
+                    # Improve image quality by modifying the URL parameters
+                    # Parse the URL to modify the query parameters
+                    parsed_url = urllib.parse.urlparse(img_url)
+                    query_params = urllib.parse.parse_qs(parsed_url.query)
+                    
+                    # Update parameters for higher quality
+                    # Increase width and height (4x original size for maximum quality)
+                    query_params['w'] = ['720']  # 4x the original 180
+                    query_params['h'] = ['944']  # 4x the original 236
+                    query_params['fit'] = ['crop']  # Use crop instead of min for better fitting
+                    query_params['q'] = ['100']  # Maximum quality (100%)
+                    
+                    # Keep auto=format for optimal format selection
+                    if 'auto' in query_params:
+                        query_params['auto'] = ['format,compress']  # Add compression optimization
+                    else:
+                        query_params['auto'] = ['format,compress']
+                    
+                    # Rebuild the URL with new parameters
+                    new_query = urllib.parse.urlencode(query_params, doseq=True)
+                    new_url_parts = list(parsed_url)
+                    new_url_parts[4] = new_query
+                    high_quality_img_url = urllib.parse.urlunparse(new_url_parts)
+                    
                     # Create a safe filename from the game URL
                     game_id = link.split('/')[-1]
                     image_filename = f"{game_id}.jpg"
@@ -74,19 +98,26 @@ def extract_game_info(html_file, csv_file, limit=0):
                     
                     # Download the image
                     try:
-                        # Show progress
-                        if index % 10 == 0:
-                            print(f"Downloading image {index+1}/{total_games}: {title}")
+                        # Show progress for every image
+                        print(f"Downloading image {index+1}/{total_games}: {title}")
+                        print(f"URL: {high_quality_img_url}")
                         
                         # Add a small delay to avoid overwhelming the server
-                        if index > 0 and index % 5 == 0:
+                        if index > 0 and index % 3 == 0:
                             time.sleep(0.5)
                             
-                        # Download the image
-                        urllib.request.urlretrieve(img_url, local_image_path)
+                        # Download the high quality image
+                        urllib.request.urlretrieve(high_quality_img_url, local_image_path)
                         image_path = local_image_path
                     except Exception as e:
                         print(f"Error downloading image for {title}: {e}")
+                        # Try with original URL as fallback
+                        try:
+                            print(f"Trying original URL as fallback...")
+                            urllib.request.urlretrieve(img_url, local_image_path)
+                            image_path = local_image_path
+                        except Exception as e2:
+                            print(f"Error downloading image with original URL: {e2}")
                 
                 # Write to CSV
                 csv_writer.writerow([url, title, provider, image_path])
@@ -107,8 +138,8 @@ def csv_to_json(csv_file, json_file):
     print(f"Converted CSV to JSON: {json_file}")
 
 if __name__ == "__main__":
-    # Set limit=0 to process all games, or a positive number to limit the count
-    extract_game_info('games.html', 'games.csv', limit=0)  # Process all games
+    # Process all games by setting limit=0
+    extract_game_info('games.html', 'games.csv', limit=0)
     
     # Convert CSV to JSON for web application
     csv_to_json('games.csv', 'games.json') 

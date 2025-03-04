@@ -12,11 +12,52 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 
-// Serve static images
-app.use('/images', express.static(path.join(__dirname, '../images')));
+// Serve favicon
+app.use('/favicon.ico', (req, res) => {
+  res.sendFile(path.join(__dirname, '../client/public/favicon.ico'));
+});
 
-// Serve static files from the React build directory
-app.use(express.static(path.join(__dirname, '../client/build')));
+// Serve images with proper error handling
+app.use('/images', (req, res, next) => {
+  // In development mode, redirect to placeholder images
+  if (process.env.NODE_ENV === 'development') {
+    const width = 142;
+    const height = 190;
+    const placeholderUrl = `https://placehold.co/${width}x${height}/e0e0e0/666666?text=Loading...&exact=1`;
+    res.set({
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0'
+    });
+    res.redirect(302, placeholderUrl);
+    return;
+  }
+  
+  // In production, serve actual images
+  express.static(path.join(__dirname, '../images'), {
+    fallthrough: false,
+    maxAge: '1d'
+  })(req, res, next);
+});
+
+// Serve static files from the React app with proper error handling
+app.use(express.static(path.join(__dirname, '../client/build'), {
+  maxAge: '1d',
+  index: false // Let React router handle the root route
+}));
+
+// Handle React routing, return all requests to React app
+app.get('*', (req, res, next) => {
+  if (req.method === 'GET' && !req.path.startsWith('/api/')) {
+    res.sendFile(path.join(__dirname, '../client/build/index.html'), err => {
+      if (err) {
+        next(err);
+      }
+    });
+  } else {
+    next();
+  }
+});
 
 // Add a route handler for the root path
 app.get('/', (req, res) => {
@@ -27,21 +68,23 @@ app.get('/', (req, res) => {
 app.get('/api/games', (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 60;
-  let providers = req.query.provider || 'All';
+  const providers = req.query.provider || 'All';
   const sort = req.query.sort || 'random';
   const ids = req.query.ids; // New parameter for favorite IDs
   const search = req.query.search || ''; // New parameter for search
   const collectionId = req.query.collection || null; // New parameter for collection filtering
 
   console.log('API Request - /api/games');
-  console.log('Search param:', search);
+  console.log('Search param:', search, 'Type:', typeof search);
   console.log('Provider param:', providers);
   console.log('Sort param:', sort);
   console.log('Collection param:', collectionId);
 
   // Parse providers if it's an array format in query string
-  if (providers && providers !== 'All' && providers.includes(',')) {
-    providers = providers.split(',');
+  let providersArray = providers;
+  if (providers && providers !== 'All' && typeof providers === 'string' && providers.includes(',')) {
+    providersArray = providers.split(',');
+    console.log('Parsed providers into array:', providersArray);
   }
 
   // If IDs are provided (for favorites), prioritize fetching by IDs
@@ -55,7 +98,7 @@ app.get('/api/games', (req, res) => {
     });
   } else {
     // Normal flow - get games with pagination and filtering
-    db.getGames(page, limit, providers, sort, search, collectionId, (err, result) => {
+    db.getGames(page, limit, providersArray, sort, search, collectionId, (err, result) => {
       if (err) {
         console.error('Error getting games:', err);
         return res.status(500).json({ error: 'Failed to fetch games from database' });
@@ -210,11 +253,6 @@ app.get('/api/collections/:collectionId/games/:gameId', (req, res) => {
     }
     res.json({ inCollection: result });
   });
-});
-
-// Catch-all route to serve the React app for any other routes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 });
 
 // Handle graceful shutdown

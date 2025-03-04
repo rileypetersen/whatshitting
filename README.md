@@ -1,4 +1,4 @@
-# Game Explorer
+# What's Hitting
 
 A web application that displays a collection of games with images, allowing users to click on them to navigate to the respective game URLs.
 
