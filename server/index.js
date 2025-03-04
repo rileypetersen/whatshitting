@@ -19,24 +19,18 @@ app.use('/favicon.ico', (req, res) => {
 
 // Serve images with proper error handling
 app.use('/images', (req, res, next) => {
-  // In development mode, redirect to placeholder images
+  // In development mode, always serve a placeholder image
   if (process.env.NODE_ENV === 'development') {
-    const width = 142;
-    const height = 190;
-    const placeholderUrl = `https://placehold.co/${width}x${height}/e0e0e0/666666?text=Loading...&exact=1`;
-    res.set({
-      'Cache-Control': 'no-cache, no-store, must-revalidate',
-      'Pragma': 'no-cache',
-      'Expires': '0'
-    });
-    res.redirect(302, placeholderUrl);
+    res.redirect(302, 'https://placehold.co/142x190/e0e0e0/666666?text=x&exact=1');
     return;
   }
   
-  // In production, serve actual images
+  // In production, serve actual images with caching
   express.static(path.join(__dirname, '../images'), {
     fallthrough: false,
-    maxAge: '1d'
+    maxAge: '1d',
+    etag: true,
+    lastModified: true
   })(req, res, next);
 });
 
