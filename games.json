@@ -8830,5 +8830,125 @@
         "Title": "Fruityliner 40",
         "Provider": "Mancala",
         "Image_Path": "images/mancala-fruityliner-40.jpg"
+    },
+    {
+        "URL": "https://stake.us/casino/games/stake-originals-plinko",
+        "Title": "Plinko",
+        "Provider": "Stake Originals",
+        "Image_Path": "images/stake-originals-plinko.jpg"
+    },
+    {
+        "URL": "https://stake.us/casino/games/stake-originals-blackjack",
+        "Title": "Blackjack",
+        "Provider": "Stake Originals",
+        "Image_Path": "images/stake-originals-blackjack.jpg"
+    },
+    {
+        "URL": "https://stake.us/casino/games/stake-originals-cases",
+        "Title": "Cases",
+        "Provider": "Stake Originals",
+        "Image_Path": "images/stake-originals-cases.jpg"
+    },
+    {
+        "URL": "https://stake.us/casino/games/stake-originals-mines",
+        "Title": "Mines",
+        "Provider": "Stake Originals",
+        "Image_Path": "images/stake-originals-mines.jpg"
+    },
+    {
+        "URL": "https://stake.us/casino/games/stake-originals-dice",
+        "Title": "Dice",
+        "Provider": "Stake Originals",
+        "Image_Path": "images/stake-originals-dice.jpg"
+    },
+    {
+        "URL": "https://stake.us/casino/games/stake-originals-pump",
+        "Title": "Pump",
+        "Provider": "Stake Originals",
+        "Image_Path": "images/stake-originals-pump.jpg"
+    },
+    {
+        "URL": "https://stake.us/casino/games/stake-originals-crash",
+        "Title": "Crash",
+        "Provider": "Stake Originals",
+        "Image_Path": "images/stake-originals-crash.jpg"
+    },
+    {
+        "URL": "https://stake.us/casino/games/stake-originals-keno",
+        "Title": "Keno",
+        "Provider": "Stake Originals",
+        "Image_Path": "images/stake-originals-keno.jpg"
+    },
+    {
+        "URL": "https://stake.us/casino/games/stake-originals-limbo",
+        "Title": "Limbo",
+        "Provider": "Stake Originals",
+        "Image_Path": "images/stake-originals-limbo.jpg"
+    },
+    {
+        "URL": "https://stake.us/casino/games/stake-originals-roulette",
+        "Title": "Roulette",
+        "Provider": "Stake Originals",
+        "Image_Path": "images/stake-originals-roulette.jpg"
+    },
+    {
+        "URL": "https://stake.us/casino/games/stake-originals-hilo",
+        "Title": "Hilo",
+        "Provider": "Stake Originals",
+        "Image_Path": "images/stake-originals-hilo.jpg"
+    },
+    {
+        "URL": "https://stake.us/casino/games/stake-originals-dragon-tower",
+        "Title": "Tower",
+        "Provider": "Stake Originals",
+        "Image_Path": "images/stake-originals-dragon-tower.jpg"
+    },
+    {
+        "URL": "https://stake.us/casino/games/stake-originals-wheel",
+        "Title": "Wheel",
+        "Provider": "Stake Originals",
+        "Image_Path": "images/stake-originals-wheel.jpg"
+    },
+    {
+        "URL": "https://stake.us/casino/games/stake-originals-baccarat",
+        "Title": "Baccarat",
+        "Provider": "Stake Originals",
+        "Image_Path": "images/stake-originals-baccarat.jpg"
+    },
+    {
+        "URL": "https://stake.us/casino/games/stake-originals-video-poker",
+        "Title": "Poker",
+        "Provider": "Stake Originals",
+        "Image_Path": "images/stake-originals-video-poker.jpg"
+    },
+    {
+        "URL": "https://stake.us/casino/games/stake-originals-tome-of-life",
+        "Title": "Life",
+        "Provider": "Stake Originals",
+        "Image_Path": "images/stake-originals-tome-of-life.jpg"
+    },
+    {
+        "URL": "https://stake.us/casino/games/stake-originals-diamonds",
+        "Title": "Diamonds",
+        "Provider": "Stake Originals",
+        "Image_Path": "images/stake-originals-diamonds.jpg"
+    },
+    {
+        "URL": "https://stake.us/casino/games/stake-originals-scarab-spin",
+        "Title": "Spin",
+        "Provider": "Stake Originals",
+        "Image_Path": "images/stake-originals-scarab-spin.jpg"
+    },
+    {
+        "URL": "https://stake.us/casino/games/stake-originals-blue-samurai",
+        "Title": "Samurai",
+        "Provider": "Stake Originals",
+        "Image_Path": "images/stake-originals-blue-samurai.jpg"
+    },
+    {
+        "URL": "https://stake.us/casino/games/stake-originals-slide",
+        "Title": "Slide",
+        "Provider": "Stake Originals",
+        "Image_Path": "images/stake-originals-slide.jpg"
     }
 ]

@@ -1,6 +1,10 @@
-const sqlite3 = require('sqlite3').verbose();
-const fs = require('fs');
-const path = require('path');
+import sqlite3 from 'sqlite3';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Database file path
 const DB_PATH = path.join(__dirname, '../database.sqlite');
@@ -502,4 +506,4 @@ const dbApi = {
 };
 
 // Export the database API
-module.exports = dbApi; 
+export default dbApi; 
